@@ -116,22 +116,23 @@ void registerStudents() {
     int range;
     cout << "\nHow many students to register? (Max: " << (MAX_STUDENTS - studentCount) << "): ";
     cin >> range;
-    if (range < 1 || studentCount + range > MAX_STUDENTS) {
+    if (cin.fail() || range < 1 || studentCount + range > MAX_STUDENTS) {
         cout << "Invalid number.\n";
         return;
     }
     for (int i = 0; i < range; i++) {
-    	    if (cin.fail()) {
-            cin.clear(); cin.ignore(1000, '\n');
-            cout << "Invalid ID input. Registration cancelled.\n";
-            return;
-        }
-        cout << "\n--- Student " << (studentCount + 1) << " ---\n"; 
-		       
+        cout << "\n--- Student " << (studentCount + 1) << " ---\n";
+
         int tempID;
         do {
             cout << "ID: ";
             cin >> tempID;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Invalid ID input. Registration cancelled.\n";
+                return;
+            }
             if (isDuplicateID(tempID)) {
                 cout << "This ID is already taken! Enter a unique ID.\n";
             }
